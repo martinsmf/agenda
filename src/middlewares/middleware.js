@@ -15,10 +15,11 @@ exports.outroMiddleware = (req, res, next) => {
 }
 
 exports.checkCsrfError = (err, req, res, next) => {
-  if (err && 'EBADCSRFTOKEN' === err.code) {
-    return res.send('BAD csrf');
-    // return res.render('404');
+  if (err) {
+    // return res.send('BAD csrf');
+    return res.render('404');
   }
+  next();
 }
 
 exports.csrfMiddleware = (req, res, next) => {
