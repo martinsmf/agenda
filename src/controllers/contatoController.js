@@ -43,8 +43,10 @@ exports.edit = async function (req, res) {
     await contato.edit(req.params.id);
 
     if (contato.errors.length > 0) {
-      req.flash("erros", contato.errors);
-      req.session.save(() => res.redirect("/contato/index"));
+      req.flash("errors", contato.errors);
+      req.session.save(() =>
+        res.redirect(`back`)
+      );
       return;
     }
 
