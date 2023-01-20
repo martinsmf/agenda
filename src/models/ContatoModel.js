@@ -3,7 +3,7 @@ const validator = require("validator");
 
 const ContatoSchema = new mongoose.Schema({
   nome: { type: String, required: true },
-  sobreNome: { type: String, required: false, default: "" },
+  sobrenome: { type: String, required: false, default: "" },
   email: { type: String, required: false, default: "" },
   telefone: { type: String, required: false, default: "" },
   criadoEm: { type: Date, default: Date.now },
@@ -51,7 +51,7 @@ Contato.prototype.cleanUp = function () {
 
   this.body = {
     nome: this.body.nome,
-    sobreNome: this.body.sobreNome,
+    sobrenome: this.body.sobrenome,
     email: this.body.email,
     telefone: this.body.telefone,
   };
@@ -77,6 +77,12 @@ Contato.buscaContatos = async function () {
   const contatos = await ContatoModel.find()
     .sort({criadoEm: -1});
   return contatos;
+};
+
+Contato.delete = async function (id) {
+  if (typeof id !== "string") return;
+  const contato = await ContatoModel.findOneAndDelete({_id: id});
+  return contato;
 };
 
 module.exports = Contato;
